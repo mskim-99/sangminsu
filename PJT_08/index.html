@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>부트스트랩 레이아웃 예시</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #343a40;
+    }
+
+    .navbar-brand {
+      color: white;
+    }
+
+    .search-bar {
+      margin: 50px 0;
+    }
+
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.3s ease;
+    }
+
+    .slider-item {
+      flex: 0 0 auto;
+      width: 18rem;
+      margin-right: 10px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      width: 5%;
+      height: 30%;
+    }
+
+    .carousel-control-prev {
+      left: 10px;
+    }
+
+    .carousel-control-next {
+      right: 10px;
+    }
+
+    .py-custom-xl {
+      padding-top: 6rem !important;
+      /* 상단 패딩 (예: 96px) */
+    }
+
+    /* Navbar 스타일 */
+    .navbar-nav .nav-link {
+        color: #ffffff !important; 
+    }
+
+    /* 활성화된 (active) 링크의 색상도 흰색으로 설정 */
+    .navbar-nav .nav-link.active {
+        color: #ffffff !important;
+        font-weight: bold !important;
+        border-bottom: 1px solid #ffffff; 
+    }
+
+    /* 마우스 오버(hover) 시 색상을 살짝 어둡게 (예: 밝은 회색) */
+    .navbar-nav .nav-link:hover {
+        color: #cccccc !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <!-- <a class="navbar-brand" href="#">내 웹사이트</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">홈</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">음악 추천</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">음악 검색</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">AI 추천</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">게시판</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">마이페이지</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-custom-xl">
+    <section class="py-5 bg-light text-center">
+      <div class="container">
+        <h1 class="display-4">Youngpotify</h1>
+        <p class="lead text-muted">노래를 추천해드립니다</p>
+        <hr class="my-4">
+      </div>
+    </section>
+
+    <section class="py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="text-center mb-3 pb-1">음악 및 아티스트 검색</h2>
+            <form class="d-flex">
+              <input class="form-control form-control-lg me-2" type="search" placeholder="검색어를 입력하세요..."
+                aria-label="Search">
+              <button class="btn btn-primary btn-lg text-nowrap" type="submit">검색</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 장르별 음악 카드 슬라이드 -->
+    <div class="container pt-5">
+      <h3 class="text-center pb-1">장르별 음악</h3>
+      <div class="slider-container">
+        <div id="sliderWrapper" class="slider-wrapper">
+          <!-- 카드 항목 -->
+          <div class="slider-item">
+            <div class="card genre-card">
+              <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Hip-Hop">
+              <div class="card-body">
+                <h5 class="card-title">Hip-Hop</h5>
+                <p class="card-text">힙합 음악을 즐겨보세요!</p>
+                <a href="#" class="btn btn-outline-primary">듣기</a>
+              </div>
+            </div>
+          </div>
+          <div class="slider-item">
+            <div class="card genre-card">
+              <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Classical">
+              <div class="card-body">
+                <h5 class="card-title">Classical</h5>
+                <p class="card-text">클래식 음악을 즐겨보세요!</p>
+                <a href="#" class="btn btn-outline-primary">듣기</a>
+              </div>
+            </div>
+          </div>
+          <div class="slider-item">
+            <div class="card genre-card">
+              <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Electronic">
+              <div class="card-body">
+                <h5 class="card-title">Electronic</h5>
+                <p class="card-text">일렉트로닉 음악을 즐겨보세요!</p>
+                <a href="#" class="btn btn-outline-primary">듣기</a>
+              </div>
+            </div>
+          </div>
+          <div class="slider-item">
+            <div class="card genre-card">
+              <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Jazz">
+              <div class="card-body">
+                <h5 class="card-title">Jazz</h5>
+                <p class="card-text">재즈 음악을 즐겨보세요!</p>
+                <a href="#" class="btn btn-outline-primary">듣기</a>
+              </div>
+            </div>
+          </div>
+          <div class="slider-item">
+            <div class="card genre-card">
+              <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Pop">
+              <div class="card-body">
+                <h5 class="card-title">Pop</h5>
+                <p class="card-text">팝 음악을 즐겨보세요!</p>
+                <a href="#" class="btn btn-outline-primary">듣기</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 슬라이드 컨트롤 (좌우 화살표) -->
+        <button class="carousel-control-prev" type="button" id="prevBtn">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" id="nextBtn">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 스크립트 (슬라이드 기능) -->
+    <script>
+      const sliderWrapper = document.getElementById('sliderWrapper');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      let slideIndex = 0;
+
+      // 슬라이드 이동 함수
+      function moveSlide() {
+        sliderWrapper.style.transform = `translateX(-${slideIndex * 190}px)`; // 각 카드 width + margin-right
+      }
+
+      // 이전 버튼 클릭
+      prevBtn.addEventListener('click', function () {
+        if (slideIndex > 0) {
+          slideIndex--;
+          moveSlide();
+        }
+      });
+
+      // 다음 버튼 클릭
+      nextBtn.addEventListener('click', function () {
+        if (slideIndex < sliderWrapper.children.length - 1) {
+          slideIndex++;
+          moveSlide();
+        }
+      });
+    </script>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
