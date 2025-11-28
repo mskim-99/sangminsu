@@ -1,76 +1,8 @@
-# 🎶 음악 추천 시스템 프로젝트
-
-## 📝 프로젝트 개요
-
-이 프로젝트는 사용자에게 맞춤 음악 추천 서비스를 제공하는 시스템을 구축하는 것입니다. 사용자는 좋아하는 트랙을 **좋아요**하거나 **좋아요 취소**할 수 있으며, 이를 바탕으로 추천 시스템을 구현할 예정입니다.
-
-## 🔧 주요 기능
-
-- **사용자 및 트랙 테이블** 생성
-  - **User 테이블**과 **Track 테이블**은 1: N 관계를 형성
-  - 노래 하나는 여러 명의 가수가 부를 수 있기 때문에, **Track**과 **Artist** 테이블은 N: M 관계를 형성
-- **추천 시스템**: 사용자 데이터를 기반으로 추천
-- **노래 추천 게시판**: 사용자들이 서로 추천하는 게시판
-- **데이터베이스 업로드 요청 게시판**: 사용자들이 데이터베이스에 새로운 트랙 데이터를 요청할 수 있는 게시판
-- **노래 가사 검색 API**: 추후 추가 기능으로, 사용자가 원하는 노래의 가사를 검색할 수 있는 기능
-- **자동 데이터 수집**: 각 사용자에게 일정 시간마다 자동으로 데이터를 검색하여 데이터베이스에 저장할 수 있는 기능
-
-## 🎤 데이터베이스 설계
-
-### 1. User 테이블과 Track 테이블
-
-- **User 테이블**: 사용자 정보
-- **Track 테이블**: 노래 트랙 정보
-- **1: N 관계**: 하나의 사용자와 여러 트랙이 연결됨
-
-### 2. Track 테이블과 Artist 테이블
-
-- **Track**과 **Artist** 테이블은 **N: M 관계**를 형성합니다. 하나의 트랙은 여러 아티스트가 부를 수 있습니다.
-
-## 📊 Spotify API를 활용한 데이터 수집
-
-**spotipy** 라이브러리를 활용하여 Spotify API에서 데이터를 수집합니다.
-
-### 주요 수집 항목
-- 트랙 제목
-- 트랙 ID
-- 트랙 인기도
-- 아티스트 이름 및 ID
-- 앨범 출시 연도
-- 트랙 이미지 링크
-
-### 📑 데이터 수집 코드
-
-```python
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
-import json
-
-client_id = ''
-client_secret = ''
-
-client_credentials_manager = SpotifyClientCredentials(client_id= client_id, client_secret= client_secret)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-
-# JSON 형식의 API를 반복을 통해 리스트에 담고, 각 리스트에 담긴 데이터를 JSON 파일로 저장하는 과정입니다.
-track_data = []
-
-for i in range(0, 1000, 50):
-    track_results = sp.search(q='year:2021', type='track', limit=50, offset=i)
-    for t in track_results['tracks']['items']:
-        track_info = {
-            'track_name': t['name'],
-            'track_id': t['id'],
-            'track_popularity': t['popularity'],
-            'artist_name': t['artists'][0]['name'],
-            'artist_id': t['artists'][0]['id'],
-            'release_year': t['album']['release_date'],  # 앨범 출시 년도
-            'duration_ms': t['duration_ms'],  # 트랙 재생 시간 (밀리초)
-            'track_image_link': t['album']['images'][0]['url'],
-        }
-        track_data.append(track_info)
-
-# JSON 파일로 저장
-with open('track_data.json', 'w', encoding='utf-8') as json_file:
-    json.dump(track_data, json_file, ensure_ascii=False, indent=4)
-```
+# spotify api와 music brainz api
+- spotify api로 많은 양의 노래 데이터를 불러올 수 있지만 노래의 장르가 데이터에 없음
+- spotify api는 장르를 노래가 아닌 가수에 부여함 -> 각 노래의 장르가 아니라 가수의 장르가 되어버린다.
+- music brainz api는 사용자들의 참여를 통해 데이터가 만들어지지만 정보의 정확성이 높음
+- music brainz api는 tag라는 이름을 통해 노래의 장르를 파악할 수 있지만 노래 1개씩밖에 검색이 안됨
+- 따라서 이 두개의 api를 적절히 활용하여 spotify로 노래 검색 -> music brainz에서 해당 노래의 Id 검색 -> Id를 통해 해당 노래의 장르 검색하는 과정을 거친다.
+- 이 과정에서 tag가 작성되지 않은 경우, 'Undefined'로 정의한다 -> 추후 홈페이지 사용자가 직접 추가할 수 있게
+- tag가 여러 개 있을 수 있기 때문에 한 노래당 tag를 최대 3개 할당한다.
